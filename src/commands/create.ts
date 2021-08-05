@@ -8,7 +8,7 @@ import createStyleTemplate from "../utils/createStyleTemplate";
 
 export default class Create extends Command {
   static description =
-    "This command creates component files inside yout src/components folder.";
+    "This command creates component files inside yout src/components folder. The <component> argument accepts a relative path, but it will always creates components inside src/components folder.";
 
   static flags = {
     help: flags.help({ char: "h" }),

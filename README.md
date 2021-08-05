@@ -21,7 +21,7 @@ $ npm install -g stencil-wizard
 $ stw COMMAND
 running command...
 $ stw (-v|--version|version)
-stencil-wizard/0.0.0 linux-x64 node-v14.17.0
+stencil-wizard/1.0.0 linux-x64 node-v14.17.0
 $ stw --help [COMMAND]
 USAGE
   $ stw COMMAND
@@ -32,28 +32,28 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`stw create COMPONENT FOLDER`](#stw-create-component-folder)
+* [`stw create COMPONENT`](#stw-create-component)
 * [`stw help [COMMAND]`](#stw-help-command)
 
-## `stw create COMPONENT FOLDER`
+## `stw create COMPONENT`
 
-This command creates component files inside yout src/components folder.
+This command creates component files inside yout src/components folder. The <component> argument accepts a relative path, but it will always creates components inside src/components folder.
 
 ```
 USAGE
-  $ stw create COMPONENT FOLDER
+  $ stw create COMPONENT
 
 ARGUMENTS
   COMPONENT  name your component and do not forget the unique prefix.
-  FOLDER     folder where you wish your component to be created.
 
 OPTIONS
+  -c, --commented             includes commented Stencil template.
   -h, --help                  show CLI help
   -s, --styles=scss|css|sass  (required) [default: scss] style language
-  --storybook                 includes a storybook template file. Default is true.
+  --[no-]storybook            includes a storybook template file. Default is true.
 ```
 
-_See code: [src/commands/create.ts](https://github.com/ascpenteado/stencil-wizard/blob/v0.0.0/src/commands/create.ts)_
+_See code: [src/commands/create.ts](https://github.com/ascpenteado/stencil-wizard/blob/v1.0.0/src/commands/create.ts)_
 
 ## `stw help [COMMAND]`
 
@@ -73,20 +73,22 @@ OPTIONS
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 <!-- commandsstop -->
 
-- [`create`](#stw-create-file)
+## `stw create COMPONENT`
 
-## `stw create [COMPONENT] [FOLDER]`
-
-describe the command here
+This command creates component files inside yout src/components folder.
 
 ```
 USAGE
-  $ stw create [COMPONENT] [FOLDER]
+  $ stw create COMPONENT
+
+ARGUMENTS
+  COMPONENT  name your component and do not forget the unique prefix.
 
 OPTIONS
-  -s, --styles     style technology that will be used
-  --storybook      includes a storybook template file. Default is true.
-  -h, --help       show CLI help
+  -c, --commented             includes commented Stencil template.
+  -h, --help                  show CLI help
+  -s, --styles=scss|css|sass  (required) [default: scss] style language
+  --[no-]storybook            includes a storybook template file. Default is true.
 ```
 
-_See code: [src/commands/create.ts](https://github.com/ascpenteado/stencil-wizard/blob/v0.0.0/src/commands/create.ts)_
+_See code: [src/commands/create.ts](https://github.com/ascpenteado/stencil-wizard/blob/v1.0.0/src/commands/create.ts)_
