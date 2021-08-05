@@ -26,6 +26,16 @@ export default class Create extends Command {
       description: "includes a storybook template file. Default is true.",
       required: false,
       hidden: false,
+      default: true,
+      allowNo: true,
+    }),
+
+    commented: flags.boolean({
+      description: "includes commented Stencil template.",
+      required: false,
+      hidden: false,
+      default: false,
+      char: "c",
     }),
   };
 
@@ -35,26 +45,29 @@ export default class Create extends Command {
       required: true, // make the arg required with `required: true`
       description: "name your component and do not forget the unique prefix.", // help description
     },
-    {
-      name: "folder",
-      required: true,
-      description: "folder where you wish your component to be created.", // help description
-    },
   ];
 
   async run() {
     const { args, flags } = this.parse(Create);
 
-    const component = args.component;
-    const folder = args.folder;
-    const style = flags.styles;
+    const componentPath = args.component;
+    const componentArg = componentPath.split("/");
 
-    const stencilFile = await createStencilTemplate(component, style);
-    const storybookFile = await createStorybookTemplate(component);
+    const componentName = componentArg[componentArg.length - 1];
+
+    const folder = `src/components/${componentPath}`;
+    const style = flags.styles;
+    const commented = flags.commented;
+
+    const stencilFile = await createStencilTemplate(
+      componentName,
+      style,
+      commented
+    );
+    const storybookFile = await createStorybookTemplate(componentName);
     const styleFile = await createStyleTemplate();
 
-    this.log(`\ncreating ${component} inside ${folder}`);
-    this.log(`we are using ${style} for your style file.`);
+    this.log(`\ncreating ${componentName} inside ${folder}`);
     this.log(chalk.cyan(`Alakazan! *magic stuff happening*`));
 
     if (!existsSync(folder)) {
@@ -62,20 +75,11 @@ export default class Create extends Command {
     }
 
     try {
-      writeFileSync(`${folder}/${component}.tsx`, stencilFile, { flag: "wx" });
-      this.log(chalk.green(`\n --created ${component}.tsx inside ${folder}`));
-    } catch (error) {
-      if (error.code !== "EEXIST") {
-        this.error(error);
-      }
-    }
-
-    try {
-      writeFileSync(`${folder}/${component}.stories.ts`, storybookFile, {
+      writeFileSync(`${folder}/${componentName}.tsx`, stencilFile, {
         flag: "wx",
       });
       this.log(
-        chalk.green(`\n --created ${component}.stories.ts inside ${folder}`)
+        chalk.green(`\n --created ${componentName}.tsx inside ${folder}`)
       );
     } catch (error) {
       if (error.code !== "EEXIST") {
@@ -83,12 +87,29 @@ export default class Create extends Command {
       }
     }
 
+    if (flags.storybook) {
+      try {
+        writeFileSync(`${folder}/${componentName}.stories.ts`, storybookFile, {
+          flag: "wx",
+        });
+        this.log(
+          chalk.green(
+            `\n --created ${componentName}.stories.ts inside ${folder}`
+          )
+        );
+      } catch (error) {
+        if (error.code !== "EEXIST") {
+          this.error(error);
+        }
+      }
+    }
+
     try {
-      writeFileSync(`${folder}/${component}.${style}`, styleFile, {
+      writeFileSync(`${folder}/${componentName}.${style}`, styleFile, {
         flag: "wx",
       });
       this.log(
-        chalk.green(`\n --created ${component}.${style} inside ${folder}`)
+        chalk.green(`\n --created ${componentName}.${style} inside ${folder}`)
       );
     } catch (error) {
       if (error.code !== "EEXIST") {
