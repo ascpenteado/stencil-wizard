@@ -21,7 +21,7 @@ $ npm install -g stencil-wizard
 $ stw COMMAND
 running command...
 $ stw (-v|--version|version)
-stencil-wizard/1.0.0 linux-x64 node-v14.17.0
+stencil-wizard/1.0.2 linux-x64 node-v14.17.0
 $ stw --help [COMMAND]
 USAGE
   $ stw COMMAND
@@ -53,7 +53,7 @@ OPTIONS
   --[no-]storybook            includes a storybook template file. Default is true.
 ```
 
-_See code: [src/commands/create.ts](https://github.com/ascpenteado/stencil-wizard/blob/v1.0.0/src/commands/create.ts)_
+_See code: [src/commands/create.ts](https://github.com/ascpenteado/stencil-wizard/blob/v1.0.2/src/commands/create.ts)_
 
 ## `stw help [COMMAND]`
 
