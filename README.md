@@ -1,5 +1,4 @@
-stencil-wizard
-==============
+# stencil-wizard
 
 A better stencil generator.
 
@@ -9,11 +8,15 @@ A better stencil generator.
 [![License](https://img.shields.io/npm/l/stencil-wizard.svg)](https://github.com/ascpenteado/stencil-wizard/blob/master/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g stencil-wizard
 $ stw COMMAND
@@ -25,63 +28,27 @@ USAGE
   $ stw COMMAND
 ...
 ```
-<!-- usagestop -->
-# Commands
-<!-- commands -->
-* [`stw create [FILE]`](#stw-create-file)
-* [`stw hello [FILE]`](#stw-hello-file)
-* [`stw help [COMMAND]`](#stw-help-command)
 
-## `stw create [FILE]`
+<!-- usagestop -->
+
+# Commands
+
+<!-- commands -->
+
+- [`create`](#stw-create-file)
+
+## `stw create [COMPONENT] [FOLDER]`
 
 describe the command here
 
 ```
 USAGE
-  $ stw create [FILE]
+  $ stw create [COMPONENT] [FOLDER]
 
 OPTIONS
-  -f, --force
+  -s, --styles     style technology that will be used
+  --storybook      includes a storybook template file. Default is true.
   -h, --help       show CLI help
-  -n, --name=name  name to print
 ```
 
 _See code: [src/commands/create.ts](https://github.com/ascpenteado/stencil-wizard/blob/v0.0.0/src/commands/create.ts)_
-
-## `stw hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ stw hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ stw hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/ascpenteado/stencil-wizard/blob/v0.0.0/src/commands/hello.ts)_
-
-## `stw help [COMMAND]`
-
-display help for stw
-
-```
-USAGE
-  $ stw help [COMMAND]
-
-ARGUMENTS
-  COMMAND  command to show help for
-
-OPTIONS
-  --all  see all commands in CLI
-```
-
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
-<!-- commandsstop -->
