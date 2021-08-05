@@ -2,10 +2,13 @@ import { pascalCase } from "pascal-case";
 
 export default async function createStencilTemplate(
   component: string,
-  style: string
+  style: string,
+  commented: boolean
 ) {
   const componentClassName = pascalCase(component);
   const stencilCompleteTemplate = `
+  import { Component, Host, h, Element, State, Prop, Watch, Event, EventEmitter, Listen, Method } from '@stencil/core';
+  
   @Component({
     tag: "${component}",
     styleUrl: "${component}.${style}",
@@ -13,6 +16,9 @@ export default async function createStencilTemplate(
     assetsDirs: ['assets']
   })
   export class ${componentClassName} {
+
+    // Reference: https://stenciljs.com/docs/style-guide
+
     /**
      * 1. Own Properties
      * Always set the type if a default value has not
@@ -139,5 +145,26 @@ export default async function createStencilTemplate(
   }
   `;
 
-  return stencilCompleteTemplate;
+  const stencilSimpleTemplate = `
+  import { Component, Host, h } from '@stencil/core';
+  
+  @Component({
+    tag: "${component}",
+    styleUrl: "${component}.${style}",
+    shadow: true,
+    assetsDirs: ['assets']
+  })
+  export class ${componentClassName} {
+    
+    render() {
+      return (
+        <Host>
+          <slot></slot>
+        </Host>
+      );
+    }
+  }
+  `;
+
+  return commented ? stencilCompleteTemplate : stencilSimpleTemplate;
 }
