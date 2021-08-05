@@ -1,7 +1,7 @@
 {
   "name": "stencil-wizard",
   "description": "A better stencil generator.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Arthur Penteado @ascpenteado",
   "bin": {
     "stw": "./bin/run"
@@ -47,7 +47,7 @@
   "repository": "ascpenteado/stencil-wizard",
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
-    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest",
     "test": "echo NO TESTS"
   },
   "types": "lib/index.d.ts"
