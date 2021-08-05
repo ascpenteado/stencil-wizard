@@ -1,0 +1,55 @@
+{
+  "name": "stencil-wizard",
+  "description": "A better stencil generator.",
+  "version": "0.0.0",
+  "author": "Arthur Penteado @ascpenteado",
+  "bin": {
+    "stw": "./bin/run"
+  },
+  "bugs": "https://github.com/ascpenteado/stencil-wizard/issues",
+  "dependencies": {
+    "@oclif/command": "^1",
+    "@oclif/config": "^1",
+    "@oclif/plugin-help": "^3",
+    "chalk": "^4.1.2",
+    "pascal-case": "^3.1.2",
+    "tslib": "^1"
+  },
+  "devDependencies": {
+    "@oclif/dev-cli": "^1",
+    "@types/node": "^10",
+    "globby": "^10",
+    "ts-node": "^8",
+    "typescript": "^3.3"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/ascpenteado/stencil-wizard",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "stw",
+    "plugins": [
+      "@oclif/plugin-help"
+    ]
+  },
+  "repository": "ascpenteado/stencil-wizard",
+  "scripts": {
+    "postpack": "rm -f oclif.manifest.json",
+    "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "test": "echo NO TESTS",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts"
+}
