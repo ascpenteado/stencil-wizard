@@ -1,7 +1,7 @@
 {
   "name": "stencil-wizard",
   "description": "A better stencil generator.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "Arthur Penteado @ascpenteado",
   "bin": {
     "stw": "./bin/run"
