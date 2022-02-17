@@ -1,6 +1,6 @@
 # stencil-wizard
 
-A better stencil generator.
+A Stencil JS component generator.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/stencil-wizard.svg)](https://npmjs.org/package/stencil-wizard)
