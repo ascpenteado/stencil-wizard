@@ -2,6 +2,7 @@ import { pascalCase } from "pascal-case";
 
 export default async function createStencilTemplate(
   component: string,
+  filesBaseName: string,
   style: string,
   commented: boolean
 ) {
@@ -11,7 +12,7 @@ export default async function createStencilTemplate(
   
   @Component({
     tag: "${component}",
-    styleUrl: "${component}.${style}",
+    styleUrl: "${filesBaseName}.styles.${style}",
     shadow: true,
     assetsDirs: ['assets']
   })
@@ -150,7 +151,7 @@ export default async function createStencilTemplate(
   
   @Component({
     tag: "${component}",
-    styleUrl: "${component}.${style}",
+    styleUrl: "${filesBaseName}.styles.${style}",
     shadow: true,
   })
   export class ${componentClassName} {
@@ -163,7 +164,7 @@ export default async function createStencilTemplate(
       );
     }
   }
-  
+
   `;
 
   return commented ? stencilCompleteTemplate : stencilSimpleTemplate;

@@ -47,6 +47,13 @@ export default class Create extends Command {
     },
   ];
 
+  private getBaseName(path: string) {
+    const base = path.split('-')
+    base.shift();
+    const baseName = base.join('-')
+    return baseName;
+  }
+
   async run() {
     const { args, flags } = this.parse(Create);
 
@@ -55,12 +62,14 @@ export default class Create extends Command {
 
     const componentName = componentArg[componentArg.length - 1];
 
-    const folder = `src/components/${componentPath}`;
+    const folder = `./src/components/${componentPath}`;
     const style = flags.styles;
     const commented = flags.commented;
+    const filesBaseName = this.getBaseName(componentName)
 
     const stencilFile = await createStencilTemplate(
       componentName,
+      filesBaseName,
       style,
       commented
     );
@@ -70,16 +79,16 @@ export default class Create extends Command {
     this.log(`\ncreating ${componentName} inside ${folder}`);
     this.log(chalk.cyan(`Alakazan! *magic stuff happening*`));
 
-    if (!existsSync(folder)) {
-      mkdirSync(folder, { recursive: true });
+    if (!existsSync(filesBaseName)) {
+      mkdirSync(filesBaseName, { recursive: true });
     }
 
     try {
-      writeFileSync(`${folder}/${componentName}.tsx`, stencilFile, {
+      writeFileSync(`${filesBaseName}/${filesBaseName}.component.tsx`, stencilFile, {
         flag: "wx",
       });
       this.log(
-        chalk.green(`\n --created ${componentName}.tsx inside ${folder}`)
+        chalk.green(`\n --created ${filesBaseName}.tsx inside ${folder}`)
       );
     } catch (error) {
       if (error.code !== "EEXIST") {
@@ -89,12 +98,12 @@ export default class Create extends Command {
 
     if (flags.storybook) {
       try {
-        writeFileSync(`${folder}/${componentName}.stories.ts`, storybookFile, {
+        writeFileSync(`${filesBaseName}/${filesBaseName}.stories.tsx`, storybookFile, {
           flag: "wx",
         });
         this.log(
           chalk.green(
-            `\n --created ${componentName}.stories.ts inside ${folder}`
+            `\n --created ${filesBaseName}.stories.tsx inside ${folder}`
           )
         );
       } catch (error) {
@@ -105,11 +114,11 @@ export default class Create extends Command {
     }
 
     try {
-      writeFileSync(`${folder}/${componentName}.${style}`, styleFile, {
+      writeFileSync(`${filesBaseName}/${filesBaseName}.styles.${style}`, styleFile, {
         flag: "wx",
       });
       this.log(
-        chalk.green(`\n --created ${componentName}.${style} inside ${folder}`)
+        chalk.green(`\n --created ${filesBaseName}.styles.${style} inside ${folder}`)
       );
     } catch (error) {
       if (error.code !== "EEXIST") {

@@ -11,7 +11,7 @@ export default async function createStorybookTemplate(component: string) {
   
   const Template: StoryFn = (args) => {
     return (
-      <${component}></${component}>
+      <${component} {...args} ></${component}>
     );
   };
   
@@ -19,7 +19,7 @@ export default async function createStorybookTemplate(component: string) {
     render: Template,
     args: {}
   };
-  
+
 `;
   return storybookTemplate;
 }
