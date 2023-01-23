@@ -13,6 +13,13 @@ export default class Create extends Command {
   static flags = {
     help: flags.help({ char: "h" }),
 
+    path: flags.string({
+      char: "p",
+      description: "path where to create the files.",
+      multiple: false,
+      required: false,
+    }),
+
     styles: flags.string({
       char: "s",
       description: "style language",
@@ -48,28 +55,30 @@ export default class Create extends Command {
   ];
 
   private getBaseName(path: string) {
-    const base = path.split('-')
+    const base = path.split("-");
     base.shift();
-    const baseName = base.join('-')
+    const baseName = base.join("-");
     return baseName;
   }
 
   async run() {
     const { args, flags } = this.parse(Create);
 
-    const componentPath = args.component;
-    const componentArg = componentPath.split("/");
+    const path = flags.path;
+    
+    // TODO: maybe create storybook name from this args
+    const componentArgs: string[] = args.component.split("/");
+    const [componentName, ...rest] = componentArgs.reverse();
+    const componentPath = rest.reverse().join('/')
+    const componentWithoutPrefix = this.getBaseName(componentName);
 
-    const componentName = componentArg[componentArg.length - 1];
-
-    const folder = `./src/components/${componentPath}`;
+    const folder = !!path ? `${path}/${componentPath}/${componentWithoutPrefix}` : `./src/components/${componentPath}/${componentWithoutPrefix}`;
     const style = flags.styles;
     const commented = flags.commented;
-    const filesBaseName = this.getBaseName(componentName)
 
     const stencilFile = await createStencilTemplate(
       componentName,
-      filesBaseName,
+      componentWithoutPrefix,
       style,
       commented
     );
@@ -79,16 +88,16 @@ export default class Create extends Command {
     this.log(`\ncreating ${componentName} inside ${folder}`);
     this.log(chalk.cyan(`Alakazan! *magic stuff happening*`));
 
-    if (!existsSync(filesBaseName)) {
-      mkdirSync(filesBaseName, { recursive: true });
+    if (!existsSync(folder)) {
+      mkdirSync(folder, { recursive: true });
     }
 
     try {
-      writeFileSync(`${filesBaseName}/${filesBaseName}.component.tsx`, stencilFile, {
+      writeFileSync(`${folder}/${componentWithoutPrefix}.component.tsx`, stencilFile, {
         flag: "wx",
       });
       this.log(
-        chalk.green(`\n --created ${filesBaseName}.tsx inside ${folder}`)
+        chalk.green(`\n --created ${componentWithoutPrefix}.tsx inside ${folder}`)
       );
     } catch (error) {
       if (error.code !== "EEXIST") {
@@ -98,12 +107,12 @@ export default class Create extends Command {
 
     if (flags.storybook) {
       try {
-        writeFileSync(`${filesBaseName}/${filesBaseName}.stories.tsx`, storybookFile, {
+        writeFileSync(`${folder}/${componentWithoutPrefix}.stories.tsx`, storybookFile, {
           flag: "wx",
         });
         this.log(
           chalk.green(
-            `\n --created ${filesBaseName}.stories.tsx inside ${folder}`
+            `\n --created ${componentWithoutPrefix}.stories.tsx inside ${folder}`
           )
         );
       } catch (error) {
@@ -114,11 +123,13 @@ export default class Create extends Command {
     }
 
     try {
-      writeFileSync(`${filesBaseName}/${filesBaseName}.styles.${style}`, styleFile, {
+      writeFileSync(`${folder}/${componentWithoutPrefix}.styles.${style}`, styleFile, {
         flag: "wx",
       });
       this.log(
-        chalk.green(`\n --created ${filesBaseName}.styles.${style} inside ${folder}`)
+        chalk.green(
+          `\n --created ${componentWithoutPrefix}.styles.${style} inside ${folder}`
+        )
       );
     } catch (error) {
       if (error.code !== "EEXIST") {
