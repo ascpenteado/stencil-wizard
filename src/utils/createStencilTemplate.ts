@@ -152,7 +152,6 @@ export default async function createStencilTemplate(
     tag: "${component}",
     styleUrl: "${component}.${style}",
     shadow: true,
-    assetsDirs: ['assets']
   })
   export class ${componentClassName} {
     
@@ -164,6 +163,7 @@ export default async function createStencilTemplate(
       );
     }
   }
+  
   `;
 
   return commented ? stencilCompleteTemplate : stencilSimpleTemplate;
